@@ -1,16 +1,19 @@
 import React from "react";
 import {
   
+    Loader,
   usePluginContext,
 } from "@cortexapps/plugin-core/components";
 import "../baseStyles.css";
 // import ErrorBoundary from "./ErrorBoundary";
 
-let surveyURL:string = "https://docs.google.com/forms/d/e/1FAIpQLSd068wYDvfxbhB75fTx-KM7aWb9gNiLLcnjA6SQ4ulT9SLgqA/viewform?embedded=true";
+let surveyURL = "https://docs.google.com/forms/d/e/1FAIpQLSd068wYDvfxbhB75fTx-KM7aWb9gNiLLcnjA6SQ4ulT9SLgqA/viewform?embedded=true";
 
 const Survey: React.FC = () => {
     const context = usePluginContext();
     console.log(context);
+    const [surveyUrl, setSurveyUrl] = React.useState<any | string>();
+    const [isLoading, setIsLoading] = React.useState(true);
     React.useEffect(() => { 
     if (context.location.match("ENTITY")){
         const fetchData = async (): Promise<void> => {
@@ -26,22 +29,24 @@ const Survey: React.FC = () => {
             if (resultJson.info["x-cortex-custom-metadata"].survey !== undefined) {
                 surveyURL = resultJson.info["x-cortex-custom-metadata"].survey
             }
-            console.log(surveyURL);
-        };
+            
+        }
         void fetchData();
-   }
+        console.log(surveyURL);
+
+    }; 
+    setSurveyUrl(surveyURL);
+    setIsLoading(false);;
+        
+   
    
    }, []);
             
-   const url = new URL(
-    surveyURL
-   );
-   url.searchParams.append("embed", "true");      
    
 
   return (
-        
-     <iframe src= {url.toString()} 
+     isLoading ? <Loader/> :   
+     <iframe src= {surveyUrl ?? surveyURL} 
       width="100%" 
       height="100%"     
       style={{
