@@ -1,0 +1,11 @@
+openapi: 3.0.1
+info:
+  title: Msforms Cortex Plugin
+  description: ""
+  x-cortex-tag: msforms-cortex-plugin
+  x-cortex-git:
+    github:
+      repository: cremerica/MSForms-Cortex-Plugin
+  x-cortex-custom-metadata:
+    cortex-template-version: 0.1.0
+    cortex-generated-timestamp: 2023-07-26T13:22:57.682954456
